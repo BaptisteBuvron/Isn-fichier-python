@@ -7,33 +7,33 @@ import os
 
 #Init
 ascii = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' #Alphabet
-path_read_file = "germinal01.txt"
+path_read_file = "germinal01.txt"  #Default Path
 path_save_file = "germinal_number.txt"
-response = {} #Dictionaries
-debut = time.time()
+response = {} #Dictionary
+debut = time.time() #Time 
 number = int
 erreur = False
 total = 0
-texte =""
+text ="" #Init text from file to ""
 
 
-def read_line():
-    global texte
-    fichier_texte=open(path_read_file,'r')
-    texte=fichier_texte.readlines()
-    fichier_texte.close()
+def read_line(): #Function that read file from path_read_file 
+    global text
+    fichier_text=open(path_read_file,'r')
+    text=fichier_text.readlines()
+    fichier_text.close()
 
-def calcul_lettre():
-    global texte
+def calcul_lettre(): #Function that calcul letter from text
+    global text
     global response
     global number
     i= 0
     for i in range(len(ascii)):
-        texte = str(texte)
-        number = texte.count(str(ascii[i]))
-        response[ascii[i]] = number
+        text = str(text)
+        number = text.count(str(ascii[i]))
+        response[ascii[i]] = number  #create index name with the letter in the dictionary response
 
-def write_tkinter():
+def write_tkinter(): #Function that write response in the tkinter interface
     global path_read_file
     global response
     total = 0
@@ -50,7 +50,7 @@ def write_tkinter():
     ma_fenetre.button_save.grid(row=5, column=0)
 
 
-def write_file():
+def write_file():#Function that write response in a file txt
     global total
     global path_read_file
     global path_save_file
@@ -70,7 +70,7 @@ def write_file():
         file_text.close()
 
 	
-def file_select():
+def file_select(): #Function that select the path of a file to read it
     global path_read_file
     path_read_file = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("Text Files", "*.txt"), ("All Files", "*.*")))
     if os.path.exists(path_read_file) == False:
@@ -80,18 +80,18 @@ def file_select():
         ma_fenetre.path.config(text=path_read_file)
         erreur = False
         
-def file_save():
+def file_save(): #Function that select the path of a file to save it
     global path_save_file
     path_save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("Text Files", "*.txt"), ("All Files", "*.*")))
 
-def text_changed():
+def text_changed(): #Function that change the ascii variable
     global ascii
     ascii = str(ma_fenetre.ascii.get())
 
 
 
 
-def main():
+def main(): #Main function when Calcul is pressed
     if erreur == False:
         read_line()
         calcul_lettre()
@@ -122,11 +122,11 @@ ma_fenetre.ascii= Label(ma_fenetre, text="Définir votre alphabet : ")
 ma_fenetre.ascii.grid(row=1,column=0)
 
 sv =StringVar()
-ma_fenetre.ascii=Entry(ma_fenetre,textvariable = sv, validate="focusout", validatecommand=text_changed)
+ma_fenetre.ascii=Entry(ma_fenetre,textvariable = sv, validate="focusout", validatecommand=text_changed)  #When ascii Entry is update call the function text_changed
 ma_fenetre.ascii.insert(END,ascii)
 ma_fenetre.ascii.grid(row=1,column=1)
 
-ma_fenetre.button_start = Button(ma_fenetre, text="Calcul", command =main)
+ma_fenetre.button_start = Button(ma_fenetre, text="Calcul", command =main) #Call main when button_start is pressed
 ma_fenetre.button_start.grid(row=3, column=1)
 
 bouton_quitter = Button(ma_fenetre, text ='Quitter', command = ma_fenetre.destroy)
