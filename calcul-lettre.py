@@ -94,6 +94,7 @@ def text_changed(): #Function that change the ascii variable
 def main(): #Main function when Calcul is pressed
     if erreur == False:
         read_line()
+        text_changed()
         calcul_lettre()
         write_tkinter()
 
